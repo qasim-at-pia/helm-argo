@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        {{- include "app.labels" . | nindent 8 }}
     spec:
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
