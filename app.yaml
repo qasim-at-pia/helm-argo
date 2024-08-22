@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-helmarg
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/qasim-at-pia/helm-argo.git
+    targetRevision: HEAD
+    path: app
+    helm:
+      parameters:
+        - name: "namespace"
+          value: app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
